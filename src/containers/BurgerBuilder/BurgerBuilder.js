@@ -45,7 +45,7 @@ class BurgerBuilder extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
-        this.updatePurchaseState(updatedIngredients);
+        this.updatePurchaseState(updatedIngredients); // take the newly updated state not the old one like before
         console.log('sum2', this.state.ingredients);
     }
 
