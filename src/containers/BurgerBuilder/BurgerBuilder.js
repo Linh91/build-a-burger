@@ -19,8 +19,20 @@ class BurgerBuilder extends Component {
             cheese: 0,
             meat: 0
         },
-        totalPrice: 4
+        totalPrice: 4,
+        purchasable: false
     }
+
+    updatePurchaseState = (ingredients) => {
+        const sum = Object.keys(ingredients) //(4) ["salad", "bacon", "cheese", "meat"]
+            .map(ingKey => {
+                return ingredients[ingKey]; //(4) [2, 0, 0, 0] value of type
+            })
+            .reduce((sum, el) => { // 0, 2
+                return sum + el;
+            }, 0); //starting number of zero 
+        this.setState({purchasable: sum > 0});
+        }
 
     addIngdientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -32,7 +44,9 @@ class BurgerBuilder extends Component {
         const priceAddition = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
-        this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
+        console.log('sum2', this.state.ingredients);
     }
 
     removeIngredientHandler = (type) => {
@@ -49,7 +63,8 @@ class BurgerBuilder extends Component {
         const priceDeduction = INGREDIENT_PRICES[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice - priceDeduction;
-        this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+        this.setState({totalPrice: newPrice, ingredients: updatedIngredients});
+        this.updatePurchaseState(updatedIngredients);
     }
     render () {
         const disabledInfo = {
@@ -65,7 +80,9 @@ class BurgerBuilder extends Component {
                     price={this.state.totalPrice}
                     ingredientAdded={this.addIngdientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
+                    purchasable={this.state.purchasable}
                     disabled={disabledInfo}/>
+                <button onClick={this.updatePurchaseState}>update</button>
             </Aux>
         );
     }
