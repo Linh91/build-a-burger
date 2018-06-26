@@ -36,6 +36,7 @@ class BurgerBuilder extends Component {
     }
 
     removeIngredientHandler = (type) => {
+        console.log('remove clicked');
         const oldCount = this.state.ingredients[type];
         const updateCount = oldCount - 1;
         const updatedIngredients = {
@@ -52,7 +53,8 @@ class BurgerBuilder extends Component {
             <Aux>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls
-                    ingredientAdded={this.addIngdientHandler} />
+                    ingredientAdded={this.addIngdientHandler}
+                    ingredientRemoved={this.removeIngredientHandler}/>
             </Aux>
         );
     }
