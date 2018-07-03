@@ -81,10 +81,10 @@ class BurgerBuilder extends Component {
         }
         axios.post('/orders.json', order) // first arg firebase path, second arg the order above
             .then(response => {
-                this.setState({loading: false, purchasing: false})
+                this.setState({loading: false, purchasing: false })
             })
             .catch(error => {
-                this.setState({loading: false, purchasing: false})
+                this.setState({loading: false, purchasing: false })
             });
     }
 
