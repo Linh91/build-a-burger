@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import axios from '../../axios-orders';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -61,7 +62,24 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        alert('You may continue!');
+        console.log('clicked');
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Same',
+                address: {
+                    street: 'Haygate',
+                    postcode: 'SE5 0NW',
+                    country: 'Germany'
+                },
+                email: 'test@testing.com'
+            },
+            deliveryMethod: 'asap'
+        }
+        axios.post('/orders.json', order) // first arg firebase path, second arg the order above
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
     }
 
     removeIngredientHandler = (type) => {
